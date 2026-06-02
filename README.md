@@ -161,8 +161,13 @@ the current state of this repo.
 - **What it does:** Provides udev rules and modprobe configuration for proper dGPU
   dynamic power gating on Ampere laptops. Without it, the GPU may not power down when
   idle, draining battery.
-- **Install:** Built from source via `makepkg` from the GitLab repo (handled by
-  `install.sh`). There is no pacman package.
+- **Install:** This is also on the g14 repo. The guide on asus-linux.org is wrong about that.
+- > [!NOTE]
+  > Copilot mentioned the following. Consider it when debugging. In the config files installed by this package,
+  > these options are commented out.
+  > 
+  > > NVIDIA Suspend/Hibernate parameters: You enable nvidia-suspend.service, nvidia-hibernate.service, and nvidia-resume.service. For these to actually work, NVIDIA requires you to pass NVreg_PreserveVideoMemoryAllocations=1 to the nvidia kernel module (usually via /etc/modprobe.d/nvidia.conf). Without this, saving VRAM to RAM on sleep will fail. (You will also want nvidia-drm.modeset=1 in your boot parameters for Wayland support when you move to Hyprland).
+
 - **Reference:**
   - [nvidia-laptop-power-cfg — GitLab](https://gitlab.com/asus-linux/nvidia-laptop-power-cfg)
   - [asus-linux.org — Ampere](https://asus-linux.org/guides/arch-guide/#ampere-architecture-rtx-3000-or-later)
