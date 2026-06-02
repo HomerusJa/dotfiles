@@ -313,8 +313,6 @@ Use bash tab-completion on the path if the glob doesn't work.
   visible in git history rather than silently overwritten.
 - To swap to a different preset: `starship preset <name> -o ~/.config/starship.toml`
   then commit the result.
-
-  This is the `catppuccin-powerline` preset.
 - **Reference:** [starship.rs](https://starship.rs/), [Presets](https://starship.rs/presets/)
 
 ### Zsh Plugins (pacman-managed, no plugin manager)
