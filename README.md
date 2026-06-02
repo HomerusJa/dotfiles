@@ -275,7 +275,7 @@ Use bash tab-completion on the path if the glob doesn't work.
 - **Install:** `paru -S marktext-bin`
 - **Reference:** [MarkText — GitHub](https://github.com/marktext/marktext)
 - > [!NOTE]
-  > I am thinking about trying out Obsidian. This i
+  > I am thinking about trying out Obsidian. It's just `paru -S obsidian`.
 
 ### Music Notation: LilyPond + Frescobaldi
  
@@ -360,6 +360,25 @@ Use bash tab-completion on the path if the glob doesn't work.
 - **Why not manual symlinks:** More script code, same result.
 - **`--restow`:** Removes and recreates symlinks on each run — idempotent.
 - **Reference:** [GNU Stow](https://www.gnu.org/software/stow/)
+
+
+## Fonts
+
+Mass-installing fonts on arch is not the way to do things, as it introduces a few bad practices
+for an Arch install:
+
+- *Bloat:* I would be installing hundreds of megabytes of fonts I would never look at or use.
+
+- *Font Conflicts & Hierarchy Issues:* When I install multiple major font families (like Arial alternatives ttf-liberation and ttf-croscore simultaneously), my browser and system configuration tools can get confused about which font to prioritize as the default system sans-serif. This can lead to ugly text rendering on certain web pages.
+
+- *The Ghostty/Terminal Mess:* Having too many monospace variants installed can sometimes make font selection menus cluttered and messy.
+
+Instead, following my selection:
+
+1. **`noto-fonts` + `emoji` + `cjk**`: A bulletproof safety net. WhatsApp emojis work, and random foreign characters in GitHub code won't show up as boxes.
+2. **`ttf-liberation`**: Fulfills the standard system metrics so PDFs and document layouts don't break.
+3. **`ttf-inter`**: Makes your GNOME desktop environment look beautiful and incredibly clean.
+4. **`ttf-firacode-nerd`**: Your absolute daily driver for Ghostty and VSCode.
 
  
 ## Manual Steps (after reboot)
