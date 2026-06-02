@@ -293,8 +293,10 @@ Use bash tab-completion on the path if the glob doesn't work.
  
 ### Terminal: Ghostty
  
-- GPU-accelerated, configured via a single text file at `~/.config/ghostty/config`.
-- **Reference:** [Ghostty — GitHub](https://github.com/ghostty-org/ghostty)
+- GPU-accelerated, configured via a single text file at `~/.config/ghostty/config`, works out of the box.
+- **Reference:**
+  - [Ghostty — GitHub](https://github.com/ghostty-org/ghostty)
+  - [Config Docs - Ghostty](https://ghostty.org/docs/config)
 
 ### Shell: Zsh (scripts stay in Bash)
  
