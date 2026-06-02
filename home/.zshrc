@@ -31,6 +31,18 @@ source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
 # Real-time syntax highlighting (must be sourced last among plugins)
 source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
+# ── Environment Variables ─────────────────────────────────────────────────────
+# Prevent duplicate entries in PATH if the shell is re-sourced
+typeset -U path PATH
+
+# Prepend custom binary directories to the path array
+path=(
+  "$HOME/.local/bin"  # Where uv-installed tools and other user binaries go
+  "$HOME/.cargo/bin"  # Rust toolchain binaries
+  $path
+)
+export PATH
+
 # ── Modern CLI tool integrations ──────────────────────────────────────────────
 
 # zoxide: smarter cd — learns frecency, jump with partial names
