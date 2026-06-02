@@ -30,21 +30,9 @@ log "Checking for paru..."
 if ! command -v paru &>/dev/null; then
   info "paru not found — building from AUR..."
   sudo pacman -S --needed --noconfirm base-devel git
-  
   tmp=$(mktemp -d)
-  # Ensure the temp directory is readable/writable by everyone for the build step
-  chmod 777 "$tmp"
-  
   git clone https://aur.archlinux.org/paru.git "$tmp/paru"
-  chmod -R 777 "$tmp/paru"
-
-  # If running as root, drop privileges to the actual user behind sudo for makepkg
-  if [ "$EUID" -eq 0 ] && [ -n "$SUDO_USER" ]; then
-    (cd "$tmp/paru" && sudo -u "$SUDO_USER" makepkg -si --noconfirm)
-  else
-    (cd "$tmp/paru" && makepkg -si --noconfirm)
-  fi
-
+  (cd "$tmp/paru" && makepkg -si --noconfirm)
   rm -rf "$tmp"
 fi
 ok "paru ready"
