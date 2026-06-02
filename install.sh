@@ -174,14 +174,32 @@ AUR_PKGS=(
 paru -S --needed "${AUR_PKGS[@]}"
 ok "AUR packages installed"
 
-# ── 4. Dotfiles via GNU Stow ──────────────────────────────────────────────────
+# ── 4. VSCode extensions ─────────────────────────────────────────────────────
+log "Installing VSCode extensions..."
+VSCODE_EXTS=(
+  aaron-bond.better-comments
+  catppuccin.catppuccin-vsc
+  catppuccin.catppuccin-vsc-icons
+  tamasfe.even-better-toml
+  astral-sh.ty
+  charliermarsh.ruff
+  rust-lang.rust-analyzer
+  yzhang.markdown-all-in-one
+  esbenp.prettier-vscode
+)
+for ext in "${VSCODE_EXTS[@]}"; do
+  code --install-extension "$ext" --force
+done
+ok "VSCode extensions installed"
+
+# ── 5. Dotfiles via GNU Stow ─────────────────────────────────────────────────
 # home/ mirrors ~/ exactly. --restow removes and recreates all symlinks —
 # making this idempotent. Docs: https://www.gnu.org/software/stow/
 log "Symlinking dotfiles..."
 stow --dir="$DOTFILES_DIR" --target="$HOME" --restow home
 ok "Dotfiles symlinked to $HOME"
 
-# ── 5. Shell: set Zsh as default ─────────────────────────────────────────────
+# ── 6. Shell: set Zsh as default ─────────────────────────────────────────────
 log "Setting Zsh as default shell..."
 ZSH_PATH="$(which zsh)"
 if [ "$SHELL" != "$ZSH_PATH" ]; then
@@ -194,18 +212,18 @@ else
   ok "Zsh already the default shell"
 fi
 
-# ── 6. Rust toolchain ─────────────────────────────────────────────────────────
+# ── 7. Rust toolchain ────────────────────────────────────────────────────────
 log "Setting up Rust toolchain..."
 rustup default stable
 ok "Rust stable toolchain active"
  
-# ── 7. Python tooling via uv ──────────────────────────────────────────────────
+# ── 8. Python tooling via uv ─────────────────────────────────────────────────
 log "Installing Python tools via uv..."
 uv tool install ruff
 uv tool install ty
 ok "ruff and ty installed"
 
-# ── 8. Systemd services ───────────────────────────────────────────────────────
+# ── 9. Systemd services ──────────────────────────────────────────────────────
 log "Enabling system services..."
  
 # power-profiles-daemon: required by asusctl for power profile management
@@ -237,7 +255,7 @@ log "Enabling user services..."
 systemctl --user enable --now onedrive
 ok "onedrive user service enabled"
 
-# ── 9. Post-install summary ──────────────────────────────────────────────────
+# ── 10. Post-install summary ─────────────────────────────────────────────────
 cat <<'EOF'
  
 ════════════════════════════════════════════════════════
