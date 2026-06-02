@@ -1,0 +1,4 @@
+# Skip everything above 500 MB
+# This acts as a safety net. The primary control is the sync_list.
+# Documentation can be found here: https://github.com/abraunegg/onedrive/blob/master/docs/usage.md#using-client-side-filtering-rules-to-determine-what-should-be-synced-with-microsoft-onedrive
+skip_size = "500"
