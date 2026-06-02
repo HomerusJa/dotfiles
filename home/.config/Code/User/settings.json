@@ -1,0 +1,58 @@
+{
+    // ── Appearance ──────────────────────────────────────────────────────────
+    "workbench.colorTheme": "Catppuccin Mocha",
+    "workbench.iconTheme": "catppuccin-mocha",
+
+    // Suggested by Catppuccin theme
+    "editor.semanticHighlighting.enabled": true,
+    "window.titleBarStyle": "custom",
+
+    "editor.fontFamily": "FiraCode Nerd Font",
+    "editor.fontLigatures": "'cv01', 'cv02', 'cv14', 'ss05', 'ss04', 'ss03', 'cv30', 'ss02', 'cv24', 'ss09', 'ss07'",
+    "editor.fontSize": 14,
+
+    "workbench.tree.indent": 20,
+    "editor.minimap.enabled": false,
+
+    // --- Files --------------------------------------------------------------
+    "files.autoSave": "afterDelay",
+
+    // ── Telemetry ───────────────────────────────────────────────────────────
+    // Allow error reports (crash diagnostics) but nothing else.
+    // Ref: https://code.visualstudio.com/docs/configure/telemetry
+    "telemetry.telemetryLevel": "error",
+
+    // --- Formatting ---------------------------------------------------------
+    "editor.formatOnPaste": true,
+    "editor.formatOnSave": false,
+
+    "editor.tabSize": 4,
+
+    // --- Python ---------------------------------------------------------
+    // ruff as the default linter and formatter
+    // ty as the type checker and language server
+    "[python]": {
+        "editor.defaultFormatter": "charliermarsh.ruff"
+        // TODO: Review settings for things like auto fixing of linting errors, import order etc.
+    },
+    "python.languageServer": "None", // Ref: https://docs.astral.sh/ty/editors/#vs-code
+
+    // ── Rust ───────────────────────────────────────────────────────────────────
+    // rust-analyzer: inline type hints, completions, error highlighting.
+    // Ref: https://code.visualstudio.com/docs/languages/rust
+    // TODO: Review settings for the rust-analyzer extension, e.g. for inline type hints etc.
+
+    // TODO: Do all the other languages when appropriate
+
+    // --- Terminal -----------------------------------------------------------
+    // Use Zsh in the integrated terminal to match the system shell.
+    "terminal.integrated.defaultProfile.linux": "zsh",
+
+    "terminal.integrated.fontFamily": "FiraCode Nerd Font",
+    "terminal.integrated.fontLigatures.enabled": true,
+    "terminal.integrated.fontLigatures.featureSettings": "'cv01', 'cv02', 'cv14', 'ss05', 'ss04', 'ss03', 'cv30', 'ss02', 'cv24', 'ss09', 'ss07'",
+
+    // Prevent VSCode from modifying the terminal colors
+    // Suggested by Catppuccin theme author
+    "terminal.integrated.minimumContrastRatio": 1
+}
