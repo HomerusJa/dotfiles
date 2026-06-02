@@ -146,6 +146,15 @@ PACMAN_PKGS=(
   timeshift        # System backups (rsync mode on Ext4)
   pacman-contrib   # Provides paccache for package cache cleanup
  
+  # Fonts
+  # Reasoning for each can be found in README.md § Fonts
+  noto-fonts
+  noto-fonts-emoji
+  noto-fonts-cjk
+  ttf-liberation
+  ttf-inter
+  ttf-fira-code-nerd
+
   # Apps
   keepassxc
   lilypond
