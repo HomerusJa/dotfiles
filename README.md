@@ -1,0 +1,397 @@
+# Dotfiles
+ 
+Personal Arch Linux configuration for an ASUS ROG Strix G17 G713 (Ryzen 9 5900HX, RTX 3070).
+Windows dual boot retained for Fusion 360 and other Windows-only software.
+Every decision is documented here with rationale, tradeoffs, and links.
+ 
+## Setup Workflow
+
+1. Install Arch via archinstall (dual boot, see below)
+2. git clone <this repo> ~/dotfiles
+3. `cd ~/dotfiles && bash install.sh`
+4. Work through the manual steps printed at the end
+ 
+`install.sh` is fully idempotent — safe to re-run at any time to sync a machine to
+the current state of this repo.
+ 
+---
+ 
+## Boot & Installation
+ 
+### Dual Boot with Windows
+ 
+- **Decision:** Keep Windows for Fusion 360 and other Windows-only programs.
+- **Reference:** [Dual boot with Windows — ArchWiki](https://wiki.archlinux.org/index.php/Dual_boot_with_Windows)
+
+### Bootloader: systemd-boot (not GRUB)
+ 
+- **Why:** A Windows update can silently overwrite GRUB in the EFI partition, breaking
+  the boot menu. `systemd-boot` lives in a separate EFI entry and is immune to this.
+  The official asus-linux.org guide also explicitly recommends systemd-boot and says
+  to avoid GRUB.
+- **When GRUB is worth it:** Complex multi-OS setups, or if Btrfs snapshots need to be
+  bootable from the menu (requires grub-btrfs). Neither applies here.
+- **Reference:**
+  - [systemd-boot — ArchWiki](https://wiki.archlinux.org/title/Systemd-boot)
+  - [asus-linux.org Arch guide](https://asus-linux.org/guides/arch-guide/)
+
+### Filesystem: Ext4 (not Btrfs)
+ 
+- **Why:** Avoiding Btrfs removes the need for GRUB entirely (Btrfs boot-menu snapshots
+  require grub-btrfs), keeps the setup simpler, and avoids Btrfs's write amplification
+  on the SSD for this use case.
+- **Tradeoff:** Timeshift runs in `rsync` mode instead of snapshot mode. Snapshots on
+  Btrfs are near-instant and storage-efficient; rsync copies are slower and use more
+  disk. Acceptable for a personal laptop.
+- **Revisit if:** Reinstalling from scratch — Btrfs + snapshot-mode Timeshift is a
+  meaningful upgrade if GRUB is acceptable.
+
+### Kernels: `linux` + `linux-lts`
+ 
+- **Why:** If a mainline kernel update breaks something, the LTS kernel appears as a
+  fallback in the systemd-boot menu. No Live USB required for most recovery scenarios.
+- **Custom kernel note:** The asus-linux.org guide notes that Linux 6.19+ has everything
+  needed for a smooth ASUS experience. A custom kernel (OGC or linux-g14) is only needed
+  for features not yet in mainline, or active testing. Not installing one by default.
+- **Reference:**
+  - [OGC kernel](https://github.com/OpenGamingCollective/kernel-packages)
+  - [CachyOS kernel](https://wiki.cachyos.org/features/kernel)
+
+### Firmware & Microcode
+ 
+- `linux-firmware`: required for hardware firmware blobs (WiFi, etc.)
+- `amd-ucode`: CPU microcode updates for the Ryzen 9 5900HX. Loaded by the bootloader
+  at early boot. `intel-ucode` would be used instead on Intel systems.
+- **Reference:** [Microcode — ArchWiki](https://wiki.archlinux.org/title/Microcode)
+
+### Installer: archinstall
+ 
+- **Why:** Fast, reproducible, no manual partitioning required. Manual installation
+  is only worth the time for highly custom partition layouts.
+- **Reference:** [archinstall — ArchWiki](https://wiki.archlinux.org/title/Archinstall)
+
+ 
+## Desktop Environment
+ 
+### GNOME (with Hyprland planned)
+ 
+- **Why GNOME first:** Already familiar from VM use. Wayland-native, polished, zero
+  configuration overhead.
+- **Why not Hyprland immediately:** Requires manual setup of every component (bar,
+  launcher, notifications, screensharing, idle daemon). High value, high cost.
+- **Migration note:** When switching to Hyprland, GNOME Keyring PAM initialization
+  needs manual setup (see SSH/GPG section).
+
+ 
+## System & Hardware Maintenance
+ 
+### Backups: Timeshift (rsync mode)
+ 
+- **Why Timeshift:** Simple GUI + CLI, well-documented restore from TTY.
+- **Why rsync mode:** Required for Ext4. Btrfs snapshot mode is faster but tied to Btrfs.
+- **Reference:** [Timeshift — GitHub](https://github.com/linuxmint/timeshift)
+
+### Package Cache: paccache.timer
+ 
+- **Why:** pacman/paru accumulate old package versions in `/var/cache/pacman/pkg/`.
+  `paccache` (from `pacman-contrib`) keeps the last 3 versions and ships a systemd
+  timer for weekly automation.
+- **Reference:** [paccache — ArchWiki](https://wiki.archlinux.org/title/Pacman#Cleaning_the_package_cache)
+
+ 
+## ASUS ROG Hardware
+ 
+### g14 Pacman Repo
+ 
+- **What it is:** A pacman repo maintained by the asus-linux.org team, providing
+  asusctl, rog-control-center, and related packages as precompiled binaries.
+  The name "g14" is historical — it applies to all ROG laptops.
+- **Why use it over AUR:** The guide explicitly states that `asusctl-git` and other
+  AUR variants are **not supported**. The g14 repo is the only supported installation
+  method.
+- **Setup:** Add the signing key, append the repo to `/etc/pacman.conf`, then run a
+  full system sync before installing any packages from it. `install.sh` handles this.
+- **Reference:** [asus-linux.org Arch guide — Repo](https://asus-linux.org/guides/arch-guide/#repo)
+
+### asusctl
+ 
+- **What it does:** Fan profiles, keyboard RGB, battery charge thresholds.
+- **Install:** `sudo pacman -S asusctl` (from g14 repo — **not AUR**)
+- **asusd service:** intentionally NOT enabled via systemctl. It is triggered
+  automatically by a udev rule once the keyboard driver is ready. Enabling it manually
+  can cause race conditions on boot.
+- **Reference:** [asus-linux.org — asusctl](https://asus-linux.org/guides/arch-guide/#asusctl-custom-fan-profiles-anime-led-control-etc)
+
+### ROG Control Center
+ 
+- **What it is:** GUI frontend for asusctl. Previously bundled with asusctl, now
+  a separate package in the g14 repo.
+- **Install:** `sudo pacman -S rog-control-center`
+- **Reference:** [asus-linux.org — ROG Control Center](https://asus-linux.org/guides/arch-guide/#rog-control-center)
+
+### power-profiles-daemon
+ 
+- **Why:** asusctl is designed to work with power-profiles-daemon for power profile
+  management. Other power management tools (e.g. TLP, auto-cpufreq) **conflict** with
+  asusctl and must not be installed alongside it.
+- **Reference:** [asus-linux.org — asusctl](https://asus-linux.org/guides/arch-guide/#asusctl-custom-fan-profiles-anime-led-control-etc)
+
+### supergfxctl — NOT installed (deprecated)
+ 
+- **Why not:** The asus-linux.org guide explicitly marks supergfxctl as deprecated and
+  advises against installing it: *"unless you require vfio for virtual machines or have
+  problems turning off your dGPU don't install it."*
+- The RTX 3070 (Ampere) handles dynamic power gating via `nvidia-laptop-power-cfg` and
+  the nvidia power management services instead. supergfxctl is not needed.
+- **Reference:** [asus-linux.org — supergfxctl (Deprecated)](https://asus-linux.org/guides/arch-guide/#supergfxctl-graphics-switching-Deprecated)
+
+
+## NVIDIA (RTX 3070 — Ampere)
+ 
+### Driver
+ 
+- **Package:** `nvidia-open` — the open-source kernel module, appropriate for Ampere
+  architecture and later. The proprietary `nvidia` package is only needed for Turing
+  (RTX 2000) and older where GSP firmware must be disabled.
+- **Also install:** `nvidia-utils` (userspace libraries) and `vulkan-icd-loader`
+  (Vulkan ICD loader, required).
+
+### nvidia-laptop-power-cfg
+ 
+- **What it does:** Provides udev rules and modprobe configuration for proper dGPU
+  dynamic power gating on Ampere laptops. Without it, the GPU may not power down when
+  idle, draining battery.
+- **Install:** Built from source via `makepkg` from the GitLab repo (handled by
+  `install.sh`). There is no pacman package.
+- **Reference:**
+  - [nvidia-laptop-power-cfg — GitLab](https://gitlab.com/asus-linux/nvidia-laptop-power-cfg)
+  - [asus-linux.org — Ampere](https://asus-linux.org/guides/arch-guide/#ampere-architecture-rtx-3000-or-later)
+
+### NVIDIA systemd services
+ 
+These four services are enabled to handle GPU state across power transitions:
+ 
+```
+nvidia-suspend.service    # saves GPU state before system suspend
+nvidia-hibernate.service  # saves GPU state before hibernation
+nvidia-resume.service     # restores GPU state on wake
+nvidia-powerd             # runtime power management daemon (started immediately)
+```
+ 
+### Verifying S0ix Power Management
+ 
+After first boot, verify that S0ix power management is active (critical for idle
+power consumption and sleep):
+ 
+```bash
+cat /proc/driver/nvidia/gpus/*/power
+# Expected: "Status: Enabled" under "S0ix Power Management"
+```
+ 
+Use bash tab-completion on the path if the glob doesn't work.
+ 
+- **Reference:** [asus-linux.org — Next steps](https://asus-linux.org/guides/arch-guide/#next-steps)
+
+ 
+## Package Management
+ 
+### paru (AUR helper)
+ 
+- **Why paru over yay:** Written in Rust, actively maintained, feature-complete. But to be honest, it was just a vibe decision. And it does not really matter anyway.
+- **Idempotency:** `paru -S --needed` skips already-installed packages.
+- **Reference:** [paru — GitHub](https://github.com/Morganamilo/paru)
+
+
+## Programs
+ 
+### Editor: Visual Studio Code (`visual-studio-code-bin`)
+ 
+- **Why the Microsoft AUR build, not `code`:** The open-source `code` build uses
+  OpenVSX, which lacks proprietary extensions (Copilot, official remote dev tools).
+- **`settings.json`** tracked at `home/.config/Code/User/settings.json`. Key settings:
+  - `"telemetry.telemetryLevel": "error"` — error reporting only, no usage telemetry
+  - ruff as default formatter and linter for Python
+  - ty handles type checking (pylance type checking disabled)
+  - rust-analyzer with clippy and inlay hints
+  - Catppuccin Mocha theme (install the extension to activate)
+- **Extensions:** Not scripted — install manually or via Settings Sync on first launch.
+  > [!NOTE]
+  > This can be scripted via `code --install-extension <...>`, see their [docs](https://code.visualstudio.com/docs/configure/command-line#_working-with-extensions). This is a current TODO.
+- **Reference:** [VSCode — ArchWiki](https://wiki.archlinux.org/title/Visual_Studio_Code),
+  [Telemetry docs](https://code.visualstudio.com/docs/configure/telemetry)
+
+### Python: uv + ruff + ty
+ 
+- **uv:** Fast Python package and project manager. Replaces pip, virtualenv, pyenv.
+  [uv — GitHub](https://github.com/astral-sh/uv)
+- **ruff:** Linter and formatter, installed as a uv tool (globally available).
+  [ruff — GitHub](https://github.com/astral-sh/ruff)
+- **ty:** Type checker from Astral. Fast, modern alternative to mypy/pyright.
+  [ty — GitHub](https://github.com/astral-sh/ty)
+- Both also installed as VSCode extensions for inline feedback.
+
+### AI Coding
+ 
+- **Status:** To be determined.
+- **Options:** [Continue](https://www.continue.dev/) + [GitHub Models API](https://github.com/marketplace/models)
+  (free but rate-limited); [Claude Code](https://docs.anthropic.com/en/docs/claude-code)
+
+### OneDrive: abraunegg/onedrive
+ 
+- **Key settings** (tracked in `home/.config/onedrive/config`):
+  - `skip_size = "50"`: skip files over 50 MB to keep the local footprint small
+  - `sync_list_file`: points to `sync_list` for whitelist-mode selective sync
+- **`sync_list`** (tracked in `home/.config/onedrive/sync_list`): template with
+  commented-out example paths. Edit to add the folders you want synced locally,
+  then run `onedrive --sync --resync --verbose` for the initial sync.
+- **Note:** First-time auth (`onedrive` browser flow) and the initial sync are
+  manual steps — interactive by nature and cannot be scripted.
+- **Reference:** [abraunegg/onedrive — GitHub](https://github.com/abraunegg/onedrive),
+  [Usage docs](https://github.com/abraunegg/onedrive/blob/master/docs/usage.md)
+
+### Password Manager: KeepassXC
+ 
+- Open-source, no cloud account. Database stored on OneDrive for cross-device access
+  without trusting a third-party vault.
+- **Reference:** [KeepassXC](https://keepassxc.org/)
+
+### Browser: Brave
+ 
+- Chromium engine, built-in ad-blocking, native PWA support (no extension needed).
+- **Install:** `paru -S brave-bin`
+
+### WhatsApp: Brave PWA
+ 
+- No native Linux client. Brave handles PWAs natively as a Chromium-based browser.
+  Previous setup used Firefox + PWAs-for-Firefox extension, which caused WhatsApp to
+  open in the foreground on startup. Brave solves this cleanly.
+- **Setup:** `web.whatsapp.com` in Brave → install icon in address bar.
+
+### Markdown Editor: MarkText
+ 
+- After trying Ghostwriter (moved to Fedora, outdated on Arch), Apostrophe (no syntax
+  highlighting), and Zettlr (too publication-focused), MarkText best fits the minimal
+  requirement.
+- **Install:** `paru -S marktext-bin`
+- **Reference:** [MarkText — GitHub](https://github.com/marktext/marktext)
+- > [!NOTE]
+  > I am thinking about trying out Obsidian. This i
+
+### Music Notation: LilyPond + Frescobaldi
+ 
+- LilyPond: text-based notation, PDF output. [lilypond.org](https://lilypond.org)
+- Frescobaldi: GUI editor for LilyPond. [frescobaldi.org](https://www.frescobaldi.org)
+
+### Containerization: Podman (not Docker)
+ 
+- Daemonless (saves battery), rootless by default (better security).
+- `podman-docker` aliases all `docker` commands to `podman` transparently.
+- **Reference:** [Podman](https://podman.io/)
+
+ 
+## Shell
+ 
+### Terminal: Ghostty
+ 
+- GPU-accelerated, configured via a single text file at `~/.config/ghostty/config`.
+- **Reference:** [Ghostty — GitHub](https://github.com/ghostty-org/ghostty)
+
+### Shell: Zsh (scripts stay in Bash)
+ 
+- Zsh for interactive use: better completion, richer plugins.
+- Bash for scripts: POSIX-compatible, available everywhere.
+- **Reference:** [Zsh — ArchWiki](https://wiki.archlinux.org/title/Zsh)
+
+### Prompt: Starship
+ 
+- Cross-shell, Rust-based, no perceptible latency.
+- Config at `~/.config/starship.toml` — **vendored directly in this repo**.
+  Based on the catppuccin-powerline preset, adjusted and documented inline.
+  No manual preset command needed after install.
+- **Why vendor instead of running a preset:** A vendored config is version-controlled,
+  reviewable, and doesn't depend on a network call during setup. Customisations are
+  visible in git history rather than silently overwritten.
+- To swap to a different preset: `starship preset <name> -o ~/.config/starship.toml`
+  then commit the result.
+
+  This is the `catppuccin-powerline` preset.
+- **Reference:** [starship.rs](https://starship.rs/), [Presets](https://starship.rs/presets/)
+
+### Zsh Plugins (pacman-managed, no plugin manager)
+ 
+- **Why no Oh My Zsh / Zinit:** Startup latency, extra dependency. Arch repos ship
+  the main plugins; sourcing them directly in `.zshrc` is simpler and faster.
+- `zsh-syntax-highlighting`: real-time command highlighting
+- `zsh-autosuggestions`: Fish-like history suggestions
+- `zsh-completions`: extra completions for Docker, Git, Node, etc.
+
+### Modern CLI Utilities
+ 
+| Tool                                            | Replaces         | Why                                        |
+| ----------------------------------------------- | ---------------- | ------------------------------------------ |
+| [fzf](https://github.com/junegunn/fzf)          | `Ctrl+R` history | Fuzzy search over history, files, anything |
+| [zoxide](https://github.com/ajeetdsouza/zoxide) | `cd`             | Learns frecency, jump by partial name      |
+| [eza](https://github.com/eza-community/eza)     | `ls`             | Color-coded, Git status, tree view         |
+| [bat](https://github.com/sharkdp/bat)           | `cat`            | Syntax highlighting, Git diff              |
+
+
+ 
+## Rust
+ 
+- **Toolchain manager:** `rustup` (installed via pacman)
+- **Why `base-devel`:** Rust crates with C dependencies need `gcc`, `make`, `binutils`.
+- **VSCode:** `rust-analyzer` extension.
+- **Reference:** [Rust installation](https://doc.rust-lang.org/book/ch01-01-installation.html)
+
+ 
+## SSH / GPG Keys
+ 
+- **Managed via:** GNOME Keyring (unlocks on login).
+- **Hyprland migration note:** GNOME Keyring needs a PAM snippet that GNOME sets up
+  automatically. Must be added manually when switching to Hyprland, or replaced with
+  another agent.
+
+ 
+## Dotfile Management
+ 
+### GNU Stow
+ 
+- `home/` mirrors `~/` exactly. `stow --restow home` creates all symlinks in one call.
+- **Why not bare git:** Requires a custom alias instead of normal git commands; confusing
+  to revisit.
+- **Why not manual symlinks:** More script code, same result.
+- **`--restow`:** Removes and recreates symlinks on each run — idempotent.
+- **Reference:** [GNU Stow](https://www.gnu.org/software/stow/)
+
+ 
+## Manual Steps (after reboot)
+ 
+**Reboot first.** The NVIDIA driver and asusd udev rule both need a clean boot.
+ 
+1. **Verify NVIDIA S0ix** — critical for battery life and sleep:
+   ```
+   cat /proc/driver/nvidia/gpus/*/power
+   # Expected: "Status: Enabled" under "S0ix Power Management"
+   ```
+   If disabled, see [asus-linux.org — Next steps](https://asus-linux.org/guides/arch-guide/#next-steps).
+
+2. **OneDrive auth:** Run `onedrive`, follow browser flow. Config and `sync_list`
+   are already in place via stow. Edit `~/.config/onedrive/sync_list` to add your
+   folders, then: `onedrive --sync --resync --verbose`.
+
+3. **KeepassXC:** Open the app and point it to the database on OneDrive.
+
+4. **GitHub SSH key:**
+   ```
+   ssh-keygen -t ed25519 -C "your@email.com"
+   cat ~/.ssh/id_ed25519.pub   # paste into GitHub → Settings → SSH Keys
+   ```
+
+5. **WhatsApp PWA:** Brave → `web.whatsapp.com` → install icon in address bar.
+
+6. **VSCode extensions:** Install manually or sign in to Settings Sync.
+   `settings.json` is already in place via stow.
+   > [!NOTE]
+   > As mentioned above, this step should become obsolete.
+
+7. **Timeshift:** Open GUI → set snapshot location and schedule.
