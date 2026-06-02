@@ -140,8 +140,8 @@ PACMAN_PKGS=(
   noto-fonts-emoji
   noto-fonts-cjk
   ttf-liberation
-  ttf-inter
-  ttf-fira-code-nerd
+  inter-font
+  ttf-firacode-nerd
 
   # Apps
   keepassxc

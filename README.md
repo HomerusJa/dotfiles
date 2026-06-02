@@ -385,7 +385,7 @@ Instead, following my selection:
 
 1. **`noto-fonts` + `emoji` + `cjk**`: A bulletproof safety net. WhatsApp emojis work, and random foreign characters in GitHub code won't show up as boxes.
 2. **`ttf-liberation`**: Fulfills the standard system metrics so PDFs and document layouts don't break.
-3. **`ttf-inter`**: Makes your GNOME desktop environment look beautiful and incredibly clean.
+3. **`inter-font`**: Makes your GNOME desktop environment look beautiful and incredibly clean.
 4. **`ttf-firacode-nerd`**: Your absolute daily driver for Ghostty and VSCode.
 
  
