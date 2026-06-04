@@ -16,6 +16,9 @@
 
     // --- Files --------------------------------------------------------------
     "files.autoSave": "afterDelay",
+    
+    // --- Git ----------------------------------------------------------------
+    "git.confirmSync": false,
 
     // ── Telemetry ───────────────────────────────────────────────────────────
     // Allow error reports (crash diagnostics) but nothing else.
