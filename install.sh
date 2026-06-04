@@ -98,7 +98,8 @@ PACMAN_PKGS=(
   # nvidia-utils: userspace utilities and libraries
   # vulkan-icd-loader: required Vulkan loader
   # Ref: https://asus-linux.org/guides/arch-guide/#ampere-architecture-rtx-3000-or-later
-  nvidia-open
+  nvidia-open  # Note: May conflict with nvidia-open-dkms. If that happens, just
+               #       confirm that nvidia-open will be installed instead of nvidia-open-dkms.
   nvidia-utils
   vulkan-icd-loader
  
@@ -111,15 +112,19 @@ PACMAN_PKGS=(
   ghostty                   # GPU-accelerated terminal emulator
  
   # Modern CLI replacements
-  fzf      # Fuzzy finder — overrides Ctrl+R history search
-  zoxide   # Smarter cd — learns frecency
-  eza      # ls replacement — color, Git status, tree
-  bat      # cat replacement — syntax highlighting, Git diff
+  fzf         # Fuzzy finder — overrides Ctrl+R history search
+  zoxide      # Smarter cd — learns frecency
+  eza         # ls replacement — color, Git status, tree
+  bat         # cat replacement — syntax highlighting, Git diff
+  github-cli  # gh: PRs, issues, notifications, and more from terminal
  
   # Dotfile manager
   stow     # Symlink farm manager — see README.md § Dotfile Management
  
   # Rust toolchain manager
+  # Will conflict with the rust package which might be installed as a dependency of the
+  # paru build process. In that case, just confirm that the rust package will be
+  # removed in favor of rustup.
   rustup
  
   # Python tooling
@@ -129,6 +134,7 @@ PACMAN_PKGS=(
   podman
   podman-compose
   podman-docker   # Aliases `docker` → `podman`
+  crun  # oci-runtime
  
   # System tools
   timeshift        # System backups (rsync mode on Ext4)
@@ -149,9 +155,11 @@ PACMAN_PKGS=(
   frescobaldi
   obsidian  # TODO: This is a test. Remove if it is not liked after testing.
 )
-# TODO: After the first successful run, hardcode all choices made for i.e. optional dependencies and add --noconfirm to make it fully non-interactive.
-sudo pacman -S --needed "${PACMAN_PKGS[@]}"
+sudo pacman -S --needed --noconfirm "${PACMAN_PKGS[@]}"
 ok "System packages installed"
+
+# TODO: Remove unneeded packages from things like gnome and so on...
+
 
 # ── 3. AUR packages ───────────────────────────────────────────────────────────
 log "Installing AUR packages..."
@@ -163,14 +171,11 @@ AUR_PKGS=(
   # Brave browser — Chromium engine, aggressive ad-blocking, native PWA support
   brave-bin
  
-  # Markdown editor — minimal, WYSIWYG-ish
-  marktext-bin
- 
   # OneDrive client — selective sync via sync_list, file size filtering
   onedrive-abraunegg
 )
-# TODO: As with the system packages, after the first successful run, hardcode all choices made for optional dependencies and add --noconfirm to make it fully non-interactive.
-# TODO: Confirm if --nouseask is needed
+# --needed: skip packages already installed (idempotent)
+# Left out --noconfirm for now.
 paru -S --needed "${AUR_PKGS[@]}"
 ok "AUR packages installed"
 

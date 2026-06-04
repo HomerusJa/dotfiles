@@ -394,7 +394,7 @@ Instead, following my selection:
 **Reboot first.** The NVIDIA driver and asusd udev rule both need a clean boot.
  
 1. **Verify NVIDIA S0ix** — critical for battery life and sleep:
-   ```
+   ```bash
    cat /proc/driver/nvidia/gpus/*/power
    # Expected: "Status: Enabled" under "S0ix Power Management"
    ```
@@ -406,10 +406,10 @@ Instead, following my selection:
 
 3. **KeepassXC:** Open the app and point it to the database on OneDrive.
 
-4. **GitHub SSH key:**
-   ```
-   ssh-keygen -t ed25519 -C "your@email.com"
-   cat ~/.ssh/id_ed25519.pub   # paste into GitHub → Settings → SSH Keys
+4. **Setup Git for GitHub:**
+   ```bash
+   gh auth login
+   gh auth setup-git
    ```
 
 5. **WhatsApp PWA:** Brave → `web.whatsapp.com` → install icon in address bar.

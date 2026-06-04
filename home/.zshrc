@@ -65,6 +65,8 @@ alias tree="eza --tree --color=auto"
 # Ref: https://github.com/sharkdp/bat
 alias cat="bat --pager=never"
 
+alias ,install-dotfiles="(cd ~/dotfiles && bash install.sh)"
+
 # ── Starship prompt ───────────────────────────────────────────────────────────
 # Must be last line — initializes the prompt engine
 # Config: ~/.config/starship.toml
