@@ -2,3 +2,5 @@ font-family = FiraCode Nerd Font
 
 # Same as in VSCode
 font-feature = "'cv01', 'cv02', 'cv14', 'ss05', 'ss04', 'ss03', 'cv30', 'ss02', 'cv24', 'ss09', 'ss07'"
+
+theme = Catppuccin Mocha
