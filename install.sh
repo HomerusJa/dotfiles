@@ -154,6 +154,9 @@ PACMAN_PKGS=(
   lilypond
   frescobaldi
   obsidian  # TODO: This is a test. Remove if it is not liked after testing.
+
+  # GNOME-related tools
+  gnome-browser-connector
 )
 sudo pacman -S --needed --noconfirm "${PACMAN_PKGS[@]}"
 ok "System packages installed"
@@ -173,6 +176,9 @@ AUR_PKGS=(
  
   # OneDrive client — selective sync via sync_list, file size filtering
   onedrive-abraunegg
+
+  lunar-client
+  discord
 )
 # --needed: skip packages already installed (idempotent)
 # Left out --noconfirm for now.
