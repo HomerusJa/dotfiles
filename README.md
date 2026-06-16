@@ -25,6 +25,7 @@ the current state of this repo.
 - [ ] Maybe explicitly add printing to dotfiles?
 - [ ] Gnome Extensions setup complete?
 - [ ] In the archinstall configuration, a swap partition was defined but not enabled?! Check that.
+- [ ] Look over other solutions for the timezone thingy with dualboot. I dont want it to be wrong forever.
  
 ## Boot & Installation
  
