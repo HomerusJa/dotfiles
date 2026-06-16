@@ -173,6 +173,10 @@ AUR_PKGS=(
  
   # Brave browser — Chromium engine, aggressive ad-blocking, native PWA support
   brave-bin
+
+  # Zen Browser - another browser option based on Firefox's engine, with built-in
+  # ad-blocking and a focus on privacy and "zenful browsing"
+  zen-browser-bin
  
   # OneDrive client — selective sync via sync_list, file size filtering
   onedrive-abraunegg

@@ -260,10 +260,16 @@ Use bash tab-completion on the path if the glob doesn't work.
   without trusting a third-party vault.
 - **Reference:** [KeepassXC](https://keepassxc.org/)
 
-### Browser: Brave
- 
-- Chromium engine, built-in ad-blocking, native PWA support (no extension needed).
-- **Install:** `paru -S brave-bin`
+### Browser
+
+#### Zen Browser
+- Primary browser
+- Zenful browsing experience
+- TODO: Do themes really not work well with Zen?
+
+#### Brave
+- Secondary browser after Zen
+- Chromium support allows native PWA support, so this browser is kept for that.
 
 ### WhatsApp: Brave PWA
  
