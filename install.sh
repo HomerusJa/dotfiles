@@ -183,6 +183,9 @@ AUR_PKGS=(
 
   lunar-client
   discord
+
+  # A thunderbird fork
+  betterbird-bin
 )
 # --needed: skip packages already installed (idempotent)
 # Left out --noconfirm for now.

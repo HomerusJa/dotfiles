@@ -18,7 +18,6 @@ the current state of this repo.
 ## TODOs
 
 - [ ] Make themes work with Zen
-- [ ] Thunderbird
 - [ ] Dual boot bluetooth setup
 - [ ] Maybe explicitly add audio (pipewire and so on) to dotfiles?
 - [ ] Maybe explicitly add printing to dotfiles?
@@ -301,7 +300,16 @@ Use bash tab-completion on the path if the glob doesn't work.
 - `podman-docker` aliases all `docker` commands to `podman` transparently.
 - **Reference:** [Podman](https://podman.io/)
 
- 
+### Mail: Betterbird over Thunderbird
+
+- After a quick internet search, Betterbird just seems superior and I do not really see
+  a downside to using it.
+- **Reference:**
+  - [Arch Linux Wiki - Thunderbird](https://wiki.archlinux.org/title/Thunderbird)
+  - [Betterbird Homepage](https://www.betterbird.eu/)
+  - [Arch User Repository](https://aur.archlinux.org/packages/betterbird-bin)
+
+
 ## Shell
  
 ### Terminal: Ghostty
