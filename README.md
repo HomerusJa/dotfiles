@@ -8,7 +8,8 @@ Every decision is documented here with rationale, tradeoffs, and links.
 
 1. Install Arch via archinstall (dual boot, see below)
 2. git clone <this repo> ~/dotfiles
-3. `cd ~/dotfiles && bash install.sh` (Needed the first time. After that, use the `,install_dotfiles` alias.)
+3. `cd ~/dotfiles && bash install.sh` (Needed the first time. After that, use the
+   `,install_dotfiles` alias.)
 4. Work through the manual steps printed at the end
  
 `install.sh` is fully idempotent — safe to re-run at any time to sync a machine to
@@ -23,6 +24,7 @@ the current state of this repo.
 - [ ] Maybe explicitly add audio (pipewire and so on) to dotfiles?
 - [ ] Maybe explicitly add printing to dotfiles?
 - [ ] Gnome Extensions setup complete?
+- [ ] In the archinstall configuration, a swap partition was defined but not enabled?! Check that.
  
 ## Boot & Installation
  
@@ -54,16 +56,11 @@ the current state of this repo.
 - **Revisit if:** Reinstalling from scratch — Btrfs + snapshot-mode Timeshift is a
   meaningful upgrade if GRUB is acceptable.
 
-### Kernels: `linux` + `linux-lts`
- 
-- **Why:** If a mainline kernel update breaks something, the LTS kernel appears as a
-  fallback in the systemd-boot menu. No Live USB required for most recovery scenarios.
-- **Custom kernel note:** The asus-linux.org guide notes that Linux 6.19+ has everything
-  needed for a smooth ASUS experience. A custom kernel (OGC or linux-g14) is only needed
-  for features not yet in mainline, or active testing. Not installing one by default.
-- **Reference:**
-  - [OGC kernel](https://github.com/OpenGamingCollective/kernel-packages)
-  - [CachyOS kernel](https://wiki.cachyos.org/features/kernel)
+### Kernels: `linux`
+
+- While a `linux` + `linux-lts` setup was considered for a long time, it was finally
+  overturned as it would be too big for the EFI partition and the additional
+  complexitly was not deemed wothy. So this is the totally normal install.
 
 ### Firmware & Microcode
  
@@ -76,6 +73,7 @@ the current state of this repo.
  
 - **Why:** Fast, reproducible, no manual partitioning required. Manual installation
   is only worth the time for highly custom partition layouts.
+- Configuration for this install can be found in `archinstall_config.json`.
 - **Reference:** [archinstall — ArchWiki](https://wiki.archlinux.org/title/Archinstall)
 
  
