@@ -8,13 +8,21 @@ Every decision is documented here with rationale, tradeoffs, and links.
 
 1. Install Arch via archinstall (dual boot, see below)
 2. git clone <this repo> ~/dotfiles
-3. `cd ~/dotfiles && bash install.sh`
+3. `cd ~/dotfiles && bash install.sh` (Needed the first time. After that, use the `,install_dotfiles` alias.)
 4. Work through the manual steps printed at the end
  
 `install.sh` is fully idempotent — safe to re-run at any time to sync a machine to
 the current state of this repo.
- 
----
+
+## TODOs
+
+- [ ] Make themes work with Zen
+- [ ] CTRL + Y should delete the current line in VSCode
+- [ ] Thunderbird
+- [ ] Dual boot bluetooth setup
+- [ ] Maybe explicitly add audio (pipewire and so on) to dotfiles?
+- [ ] Maybe explicitly add printing to dotfiles?
+- [ ] Gnome Extensions setup complete?
  
 ## Boot & Installation
  
@@ -219,9 +227,6 @@ Use bash tab-completion on the path if the glob doesn't work.
   - ty handles type checking (pylance type checking disabled)
   - rust-analyzer with clippy and inlay hints
   - Catppuccin Mocha theme (install the extension to activate)
-- **Extensions:** Not scripted — install manually or via Settings Sync on first launch.
-  > [!NOTE]
-  > This can be scripted via `code --install-extension <...>`, see their [docs](https://code.visualstudio.com/docs/configure/command-line#_working-with-extensions). This is a current TODO.
 - **Reference:** [VSCode — ArchWiki](https://wiki.archlinux.org/title/Visual_Studio_Code),
   [Telemetry docs](https://code.visualstudio.com/docs/configure/telemetry)
 
@@ -265,7 +270,6 @@ Use bash tab-completion on the path if the glob doesn't work.
 #### Zen Browser
 - Primary browser
 - Zenful browsing experience
-- TODO: Do themes really not work well with Zen?
 
 #### Brave
 - Secondary browser after Zen
