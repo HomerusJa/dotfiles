@@ -24,6 +24,10 @@ the current state of this repo.
 - [ ] Gnome Extensions setup complete?
 - [ ] In the archinstall configuration, a swap partition was defined but not enabled?! Check that.
 - [ ] Look over other solutions for the timezone thingy with dualboot. I dont want it to be wrong forever.
+- [ ] Add signing to git for GitHub
+- [ ] Add signing to mail for i.e. jakob@schluse.com
+- [ ] Revisit Outlook calendar
+- [ ] Add iCloud calendar
  
 ## Boot & Installation
  
@@ -300,14 +304,19 @@ Use bash tab-completion on the path if the glob doesn't work.
 - `podman-docker` aliases all `docker` commands to `podman` transparently.
 - **Reference:** [Podman](https://podman.io/)
 
-### Mail: Betterbird over Thunderbird
+### Mail: Thunderbird
 
-- After a quick internet search, Betterbird just seems superior and I do not really see
-  a downside to using it.
-- **Reference:**
-  - [Arch Linux Wiki - Thunderbird](https://wiki.archlinux.org/title/Thunderbird)
-  - [Betterbird Homepage](https://www.betterbird.eu/)
-  - [Arch User Repository](https://aur.archlinux.org/packages/betterbird-bin)
+- Using the most recent version of Thunderbird gives me Exchange support [5],
+  which is not provided by Betterbird as of now (it will be included by July 2026 [4])
+- EWS support does not seem to work for me right now. I will revisit this at a later date.
+- Also, the Exchange support is by no means full. Calendars are NOT supported [6]
+- **References:**
+  1. [Arch Linux Wiki - Thunderbird](https://wiki.archlinux.org/title/Thunderbird)
+  2. [Betterbird Homepage](https://www.betterbird.eu/)
+  3. [Arch User Repository](https://aur.archlinux.org/packages/betterbird-bin)
+  4. [r/Betterbird - Exchange support](https://www.reddit.com/r/Betterbird/comments/1pcbjz2/exchange_support/)
+  5. [Thunderbird Blog - Thunderbird Adds Native Microsoft Exchange Email Support](https://blog.thunderbird.net/2025/11/thunderbird-adds-native-microsoft-exchange-email-support/)
+  6. [Mozilla Support - Thunderbird and Exchange](https://support.mozilla.org/en-US/kb/thunderbird-and-exchange)
 
 
 ## Shell

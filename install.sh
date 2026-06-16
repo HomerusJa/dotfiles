@@ -155,6 +155,8 @@ PACMAN_PKGS=(
   frescobaldi
   obsidian  # TODO: This is a test. Remove if it is not liked after testing.
 
+  thunderbird
+
   # GNOME-related tools
   gnome-browser-connector
 )
@@ -183,9 +185,6 @@ AUR_PKGS=(
 
   lunar-client
   discord
-
-  # A thunderbird fork
-  betterbird-bin
 )
 # --needed: skip packages already installed (idempotent)
 # Left out --noconfirm for now.
