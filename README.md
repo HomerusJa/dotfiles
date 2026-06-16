@@ -18,7 +18,6 @@ the current state of this repo.
 ## TODOs
 
 - [ ] Make themes work with Zen
-- [ ] CTRL + Y should delete the current line in VSCode
 - [ ] Thunderbird
 - [ ] Dual boot bluetooth setup
 - [ ] Maybe explicitly add audio (pipewire and so on) to dotfiles?
