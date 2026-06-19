@@ -238,7 +238,8 @@ ok "Rust stable toolchain active"
 log "Installing Python tools via uv..."
 uv tool install ruff
 uv tool install ty
-ok "ruff and ty installed"
+uv tool install pre-commit --with pre-commit-uv
+ok "Python tools installed"
 
 # ── 9. Systemd services ──────────────────────────────────────────────────────
 log "Enabling system services..."
