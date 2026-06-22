@@ -231,6 +231,13 @@ Use bash tab-completion on the path if the glob doesn't work.
 - **Reference:** [VSCode — ArchWiki](https://wiki.archlinux.org/title/Visual_Studio_Code),
   [Telemetry docs](https://code.visualstudio.com/docs/configure/telemetry)
 
+#### VSCode Extensions Notes
+
+- **"C/C++"** by *Microsoft* ([ms-vscode.cpptools](https://marketplace.visualstudio.com/items?itemName=ms-vscode.cpptools)):
+
+  Using this extension for debugging, as it support the GDB compiler, which is installed
+  on my system as opposed to LLVM.
+
 ### Python: uv + ruff + ty
  
 - **uv:** Fast Python package and project manager. Replaces pip, virtualenv, pyenv.

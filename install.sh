@@ -203,6 +203,7 @@ VSCODE_EXTS=(
   rust-lang.rust-analyzer
   yzhang.markdown-all-in-one
   esbenp.prettier-vscode
+  ms-vscode.cpptools
 )
 for ext in "${VSCODE_EXTS[@]}"; do
   code --install-extension "$ext" --force
