@@ -20,6 +20,7 @@
     // --- Git ----------------------------------------------------------------
     "git.confirmSync": false,
     "git.enableSmartCommit": true,
+    "git.autofetch": true,
 
     // ── Telemetry ───────────────────────────────────────────────────────────
     // Allow error reports (crash diagnostics) but nothing else.
