@@ -79,6 +79,37 @@ the current state of this repo.
 - Configuration for this install can be found in `archinstall_config.json`.
 - **Reference:** [archinstall — ArchWiki](https://wiki.archlinux.org/title/Archinstall)
 
+### Time setup
+
+As the [ArchWiki](https://wiki.archlinux.org/title/Dual_boot_with_Windows#Time_standard)
+points out, you have to put some care into how you set up you time so that the OS's don't
+interfere with each other. Here are the steps I took to make this work:
+
+1. Windows
+   1. Open the Registry Editor as Administrator
+   2. Create a new key called `RealTimeIsUniversal` of the type DWORD32 at
+      `HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\TimeZoneInformation`
+   3. Set this key to 1
+2. BIOS
+   1. Boot into the BIOS
+   2. For my machine, at the top, I can set the clock to some value manually. Open a
+      time website on another device and set it pretty accurately.
+3. Arch Linux
+   1. Run `timedatectl`
+   2. It should output something like this:
+      ```
+                     Local time: Wed 2026-06-24 16:11:41 CEST
+                 Universal time: Wed 2026-06-24 14:11:41 UTC
+                       RTC time: Wed 2026-06-24 14:11:41
+                      Time zone: Europe/Brussels (CEST, +0200)
+      System clock synchronized: yes
+                    NTP service: active
+                RTC in local TZ: no
+      ```
+   3. Set the timezone with: `timedatectl set-timezone Europe/Brussels`
+   4. If "RTC in local TZ" is set to yes, run `timedatectl set-local-rtc 0`. This tells
+      Arch the hardware clock is set to UTC instead of the local time.
+
  
 ## Desktop Environment
  
