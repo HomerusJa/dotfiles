@@ -184,6 +184,8 @@ AUR_PKGS=(
   # OneDrive client — selective sync via sync_list, file size filtering
   onedrive-abraunegg
 
+  mattermost-desktop-bin
+
   lunar-client
   discord
 )
