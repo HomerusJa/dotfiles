@@ -61,11 +61,8 @@ alias ls="eza --color=auto --group-directories-first"
 alias ll="eza -la --color=auto --group-directories-first --git"
 alias tree="eza --tree --color=auto"
 
-# bat replaces cat — syntax highlighting, Git diff integration
-# Ref: https://github.com/sharkdp/bat
-alias cat="bat --pager=never"
-
 alias ,install-dotfiles="(cd ~/dotfiles && bash install.sh)"
+alias ,edit-dotfiles="code ~/dotfiles"
 
 # ── Starship prompt ───────────────────────────────────────────────────────────
 # Must be last line — initializes the prompt engine
