@@ -155,7 +155,7 @@ PACMAN_PKGS=(
   frescobaldi
   obsidian  # TODO: This is a test. Remove if it is not liked after testing.
   gimp
-
+  libreoffice-fresh
   thunderbird
 
   # GNOME-related tools
