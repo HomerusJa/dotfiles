@@ -209,9 +209,12 @@ VSCODE_EXTS=(
   esbenp.prettier-vscode
   ms-vscode.cpptools
 )
+args=()
 for ext in "${VSCODE_EXTS[@]}"; do
-  code --install-extension "$ext" --force
+  args+=("--install-extension" "$ext")
 done
+
+code "${args[@]}" --force
 ok "VSCode extensions installed"
 
 # ── 5. Dotfiles via GNU Stow ─────────────────────────────────────────────────
