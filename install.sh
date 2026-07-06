@@ -246,7 +246,12 @@ uv tool install ty
 uv tool install pre-commit --with pre-commit-uv
 ok "Python tools installed"
 
-# ── 9. Systemd services ──────────────────────────────────────────────────────
+# --- 9. DuckDB ---------------------------------------------------------------
+log "Installing DuckDB..."
+curl https://install.duckdb.org | sh
+ok "DuckDB installed"
+
+# ── 10. Systemd services ─────────────────────────────────────────────────────
 log "Enabling system services..."
  
 # power-profiles-daemon: required by asusctl for power profile management
@@ -278,12 +283,13 @@ log "Enabling user services..."
 systemctl --user enable --now onedrive
 ok "onedrive user service enabled"
 
-# ── 10. Post-install summary ─────────────────────────────────────────────────
+# ── 11. Post-install summary ─────────────────────────────────────────────────
 cat <<'EOF'
  
 ════════════════════════════════════════════════════════
-  ✅  install.sh complete — reboot now
+  ✅  install.sh complete
 ════════════════════════════════════════════════════════
 
-After the reboot, follow the instructions in the README.md to finish the setup.
+You might want to reboot your system now. After reboot, follow the instructions in
+README.md § Post-install to finish setting up your system.
 EOF

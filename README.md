@@ -460,7 +460,7 @@ Instead, following my selection:
 4. **`ttf-firacode-nerd`**: Your absolute daily driver for Ghostty and VSCode.
 
  
-## Manual Steps (after reboot)
+## Post-install
  
 **Reboot first.** The NVIDIA driver and asusd udev rule both need a clean boot.
  
