@@ -117,6 +117,7 @@ PACMAN_PKGS=(
   eza         # ls replacement — color, Git status, tree
   bat         # cat replacement — syntax highlighting, Git diff
   github-cli  # gh: PRs, issues, notifications, and more from terminal
+  wl-clipboard
  
   # Dotfile manager
   stow     # Symlink farm manager — see README.md § Dotfile Management
