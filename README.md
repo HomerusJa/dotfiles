@@ -314,12 +314,20 @@ Use bash tab-completion on the path if the glob doesn't work.
 - Secondary browser after Zen
 - Chromium support allows native PWA support, so this browser is kept for that.
 
-### WhatsApp: Brave PWA
- 
-- No native Linux client. Brave handles PWAs natively as a Chromium-based browser.
-  Previous setup used Firefox + PWAs-for-Firefox extension, which caused WhatsApp to
-  open in the foreground on startup. Brave solves this cleanly.
-- **Setup:** `web.whatsapp.com` in Brave → install icon in address bar.
+##### PWAs
+1. **WhatsApp**
+   - No native Linux client. Brave handles PWAs natively as a Chromium-based browser.
+     Previous setup used Firefox + PWAs-for-Firefox extension, which caused WhatsApp to
+     open in the foreground on startup. Brave solves this cleanly.
+   - **Setup:** `web.whatsapp.com` in Brave → install icon in address bar.
+2. **Deezer**
+   - Again, there is no official app. There seems to be a clone of the Electron-based
+     Windows app, but to be honest, I do not need the struggle for that. This is fine.
+     The only inconvenience are the missing downloads.
+   - **Setup:** Note this is actually a tiny bit different as Deezer is no native PWA.
+     This leads to us needing to go to `deezer.com` in Brave, Menu -> Save and Share ->
+     Install page as app...
+   - **Reference:** [Deezer Community Forum - Can I use Deezer on Linux](https://en.deezercommunity.com/your-account-favorites-and-playlists-70/can-i-use-deezer-on-linux-81900)
 
 ### Markdown Editor: MarkText
  
@@ -475,11 +483,7 @@ Instead, following my selection:
    gh auth setup-git
    ```
 
-5. **WhatsApp PWA:** Brave → `web.whatsapp.com` → install icon in address bar.
+5. **PWAs in Brave:** Follow the instructions in the Brave PWA section above to install
+   the different web apps.
 
-6. **VSCode extensions:** Install manually or sign in to Settings Sync.
-   `settings.json` is already in place via stow.
-   > [!NOTE]
-   > As mentioned above, this step should become obsolete.
-
-7. **Timeshift:** Open GUI → set snapshot location and schedule.
+6. **Timeshift:** Open GUI → set snapshot location and schedule.
