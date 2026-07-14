@@ -118,6 +118,8 @@ PACMAN_PKGS=(
   bat         # cat replacement — syntax highlighting, Git diff
   github-cli  # gh: PRs, issues, notifications, and more from terminal
   wl-clipboard
+  jq
+  less
  
   # Dotfile manager
   stow     # Symlink farm manager — see README.md § Dotfile Management
@@ -174,6 +176,8 @@ AUR_PKGS=(
   # Official Microsoft VSCode build — needed for proprietary extensions (Copilot etc.)
   # The open-source 'code' on the Arch repo uses OpenVSX, lacking many extensions.
   visual-studio-code-bin
+
+  beekeeper-studio-bin
  
   # Brave browser — Chromium engine, aggressive ad-blocking, native PWA support
   brave-bin
