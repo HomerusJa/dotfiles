@@ -248,42 +248,6 @@ Use bash tab-completion on the path if the glob doesn't work.
 
 
 ## Programs
- 
-### Editor: Visual Studio Code (`visual-studio-code-bin`)
- 
-- **Why the Microsoft AUR build, not `code`:** The open-source `code` build uses
-  OpenVSX, which lacks proprietary extensions (Copilot, official remote dev tools).
-- **`settings.json`** tracked at `home/.config/Code/User/settings.json`. Key settings:
-  - `"telemetry.telemetryLevel": "error"` — error reporting only, no usage telemetry
-  - ruff as default formatter and linter for Python
-  - ty handles type checking (pylance type checking disabled)
-  - rust-analyzer with clippy and inlay hints
-  - Catppuccin Mocha theme (install the extension to activate)
-- **Reference:** [VSCode — ArchWiki](https://wiki.archlinux.org/title/Visual_Studio_Code),
-  [Telemetry docs](https://code.visualstudio.com/docs/configure/telemetry)
-
-#### VSCode Extensions Notes
-
-- **"C/C++"** by *Microsoft* ([ms-vscode.cpptools](https://marketplace.visualstudio.com/items?itemName=ms-vscode.cpptools)):
-
-  Using this extension for debugging, as it support the GDB compiler, which is installed
-  on my system as opposed to LLVM.
-
-### Python: uv + ruff + ty
- 
-- **uv:** Fast Python package and project manager. Replaces pip, virtualenv, pyenv.
-  [uv — GitHub](https://github.com/astral-sh/uv)
-- **ruff:** Linter and formatter, installed as a uv tool (globally available).
-  [ruff — GitHub](https://github.com/astral-sh/ruff)
-- **ty:** Type checker from Astral. Fast, modern alternative to mypy/pyright.
-  [ty — GitHub](https://github.com/astral-sh/ty)
-- Both also installed as VSCode extensions for inline feedback.
-
-### AI Coding
- 
-- **Status:** To be determined.
-- **Options:** [Continue](https://www.continue.dev/) + [GitHub Models API](https://github.com/marketplace/models)
-  (free but rate-limited); [Claude Code](https://docs.anthropic.com/en/docs/claude-code)
 
 ### OneDrive: abraunegg/onedrive
  
@@ -364,10 +328,37 @@ Use bash tab-completion on the path if the glob doesn't work.
   5. [Thunderbird Blog - Thunderbird Adds Native Microsoft Exchange Email Support](https://blog.thunderbird.net/2025/11/thunderbird-adds-native-microsoft-exchange-email-support/)
   6. [Mozilla Support - Thunderbird and Exchange](https://support.mozilla.org/en-US/kb/thunderbird-and-exchange)
 
+## Coding
 
-## Shell
+### Editor: Visual Studio Code (`visual-studio-code-bin`)
  
-### Terminal: Ghostty
+- **Why the Microsoft AUR build, not `code`:** The open-source `code` build uses
+  OpenVSX, which lacks proprietary extensions (Copilot, official remote dev tools).
+- **`settings.json`** tracked at `home/.config/Code/User/settings.json`. Key settings:
+  - `"telemetry.telemetryLevel": "error"` — error reporting only, no usage telemetry
+  - ruff as default formatter and linter for Python
+  - ty handles type checking (pylance type checking disabled)
+  - rust-analyzer with clippy and inlay hints
+  - Catppuccin Mocha theme (install the extension to activate)
+- **Reference:** [VSCode — ArchWiki](https://wiki.archlinux.org/title/Visual_Studio_Code),
+  [Telemetry docs](https://code.visualstudio.com/docs/configure/telemetry)
+
+#### VSCode Extensions Notes
+
+- **"C/C++"** by *Microsoft* ([ms-vscode.cpptools](https://marketplace.visualstudio.com/items?itemName=ms-vscode.cpptools)):
+
+  Using this extension for debugging, as it support the GDB compiler, which is installed
+  on my system as opposed to LLVM.
+
+### AI Coding
+ 
+- **Status:** To be determined.
+- **Options:** [Continue](https://www.continue.dev/) + [GitHub Models API](https://github.com/marketplace/models)
+  (free but rate-limited); [Claude Code](https://docs.anthropic.com/en/docs/claude-code)
+
+### Shell
+ 
+#### Terminal: Ghostty
  
 - GPU-accelerated, configured via a single text file at `~/.config/ghostty/config.ghostty`
   (it was just `config` prior to version 1.2.3), works out of the box.
@@ -375,13 +366,13 @@ Use bash tab-completion on the path if the glob doesn't work.
   - [Ghostty — GitHub](https://github.com/ghostty-org/ghostty)
   - [Config Docs - Ghostty](https://ghostty.org/docs/config)
 
-### Shell: Zsh (scripts stay in Bash)
+#### Shell: Zsh (scripts stay in Bash)
  
 - Zsh for interactive use: better completion, richer plugins.
 - Bash for scripts: POSIX-compatible, available everywhere.
 - **Reference:** [Zsh — ArchWiki](https://wiki.archlinux.org/title/Zsh)
 
-### Prompt: Starship
+#### Prompt: Starship
  
 - Cross-shell, Rust-based, no perceptible latency.
 - Config at `~/.config/starship.toml` — **vendored directly in this repo**.
@@ -394,7 +385,7 @@ Use bash tab-completion on the path if the glob doesn't work.
   then commit the result.
 - **Reference:** [starship.rs](https://starship.rs/), [Presets](https://starship.rs/presets/)
 
-### Zsh Plugins (pacman-managed, no plugin manager)
+#### Zsh Plugins (pacman-managed, no plugin manager)
  
 - **Why no Oh My Zsh / Zinit:** Startup latency, extra dependency. Arch repos ship
   the main plugins; sourcing them directly in `.zshrc` is simpler and faster.
@@ -402,7 +393,7 @@ Use bash tab-completion on the path if the glob doesn't work.
 - `zsh-autosuggestions`: Fish-like history suggestions
 - `zsh-completions`: extra completions for Docker, Git, Node, etc.
 
-### Modern CLI Utilities
+#### Modern CLI Utilities
  
 | Tool                                            | Replaces         | Why                                        |
 | ----------------------------------------------- | ---------------- | ------------------------------------------ |
@@ -412,13 +403,31 @@ Use bash tab-completion on the path if the glob doesn't work.
 | [bat](https://github.com/sharkdp/bat)           | `cat`            | Syntax highlighting, Git diff              |
 
 
- 
-## Rust
+### Rust
  
 - **Toolchain manager:** `rustup` (installed via pacman)
 - **Why `base-devel`:** Rust crates with C dependencies need `gcc`, `make`, `binutils`.
 - **VSCode:** `rust-analyzer` extension.
 - **Reference:** [Rust installation](https://doc.rust-lang.org/book/ch01-01-installation.html)
+
+### Python: uv + ruff + ty
+ 
+- **uv:** Fast Python package and project manager. Replaces pip, virtualenv, pyenv.
+  [uv — GitHub](https://github.com/astral-sh/uv)
+- **ruff:** Linter and formatter, installed as a uv tool (globally available).
+  [ruff — GitHub](https://github.com/astral-sh/ruff)
+- **ty:** Type checker from Astral. Fast, modern alternative to mypy/pyright.
+  [ty — GitHub](https://github.com/astral-sh/ty)
+- Both also installed as VSCode extensions for inline feedback.
+
+### Integrated Development: Platformio
+
+- **"PlatformIO IDE"** ([platformio.platformio-ide](https://marketplace.visualstudio.com/items?itemName=platformio.platformio-ide))
+- Some steps need to be taken after installing so that this works well. Here are two links:
+  1. Give the user permissions to actually upload to the board. I chose option 2 cause it looked easier
+     ([ref](https://docs.platformio.org/en/latest/core/installation/udev-rules.html))
+  2. Add shell commands to `PATH` so that they are available outside the VSCode-specific virtual environment
+     ([ref](https://docs.platformio.org/en/latest/core/installation/shell-commands.html))
 
  
 ## SSH / GPG Keys
