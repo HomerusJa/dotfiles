@@ -156,10 +156,12 @@ PACMAN_PKGS=(
   keepassxc
   lilypond
   frescobaldi
-  obsidian  # TODO: This is a test. Remove if it is not liked after testing.
   gimp
   libreoffice-fresh
   thunderbird
+
+  obsidian
+  syncthing  # File syncing, used for syncing obsidian vaults between devices
 
   # GNOME-related tools
   gnome-browser-connector
@@ -290,6 +292,9 @@ log "Enabling user services..."
 # OneDrive continuous sync daemon (runs as current user, not root)
 systemctl --user enable --now onedrive
 ok "onedrive user service enabled"
+
+systemctl --user enable --now syncthing.service
+ok "syncthing user service enabled"
 
 # ── 11. Post-install summary ─────────────────────────────────────────────────
 cat <<'EOF'

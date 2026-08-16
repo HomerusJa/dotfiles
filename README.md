@@ -293,15 +293,12 @@ Use bash tab-completion on the path if the glob doesn't work.
      Install page as app...
    - **Reference:** [Deezer Community Forum - Can I use Deezer on Linux](https://en.deezercommunity.com/your-account-favorites-and-playlists-70/can-i-use-deezer-on-linux-81900)
 
-### Markdown Editor: MarkText
- 
-- After trying Ghostwriter (moved to Fedora, outdated on Arch), Apostrophe (no syntax
-  highlighting), and Zettlr (too publication-focused), MarkText best fits the minimal
-  requirement.
-- **Install:** `paru -S marktext-bin`
-- **Reference:** [MarkText — GitHub](https://github.com/marktext/marktext)
-- > [!NOTE]
-  > I am thinking about trying out Obsidian. It's just `paru -S obsidian`.
+### Markdown Editor: Obsidian
+
+- Syncing via [Syncthing](https://wiki.archlinux.org/title/Syncthing) on Arch and [Synctrain](https://apps.apple.com/us/app/synctrain/id6553985316) on my iPad
+- Syncthing service needs to be enabled via `systemctl --user enable --now syncthing.service` ([ref](https://wiki.archlinux.org/title/Syncthing#User_service:_on_login))
+- [Syncthing GNOME Extension](https://extensions.gnome.org/extension/1070/syncthing-indicator/) I'm using too
+- The setup is **INCREDIBLY** simple
 
 ### Music Notation: LilyPond + Frescobaldi
  
