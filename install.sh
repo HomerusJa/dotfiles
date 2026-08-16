@@ -212,6 +212,7 @@ VSCODE_EXTS=(
   yzhang.markdown-all-in-one
   esbenp.prettier-vscode
   ms-vscode.cpptools
+  platformio.platformio-ide
 )
 args=()
 for ext in "${VSCODE_EXTS[@]}"; do
