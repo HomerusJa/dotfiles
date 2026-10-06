@@ -465,7 +465,6 @@ Instead, following my selection:
 3. **`inter-font`**: Makes your GNOME desktop environment look beautiful and incredibly clean.
 4. **`ttf-firacode-nerd`**: Your absolute daily driver for Ghostty and VSCode.
 
- 
 ## Post-install
  
 **Reboot first.** The NVIDIA driver and asusd udev rule both need a clean boot.
@@ -493,3 +492,9 @@ Instead, following my selection:
    the different web apps.
 
 6. **Timeshift:** Open GUI → set snapshot location and schedule.
+
+## Tips and Tricks
+
+This section documents various things I've learned while working on this setup.
+
+TODO: Document https://claude.ai/chat/c95b9e06-fdb3-4118-a984-23f5fc82bb55

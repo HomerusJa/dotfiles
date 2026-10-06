@@ -132,6 +132,10 @@ PACMAN_PKGS=(
  
   # Python tooling
   uv       # Fast Python package/project manager
+
+  # Node.js tooling
+  nodejs
+  npm
  
   # Containerization
   podman
@@ -165,6 +169,21 @@ PACMAN_PKGS=(
 
   # GNOME-related tools
   gnome-browser-connector
+
+  # Bluetooth
+  bluez
+  bluez-utils
+
+  # espidf
+  cmake
+  ninja
+  ccache
+  dfu-util
+  python-pip
+  gperf
+
+  # Various utilites
+  zip
 )
 sudo pacman -S --needed --noconfirm "${PACMAN_PKGS[@]}"
 ok "System packages installed"
@@ -192,9 +211,12 @@ AUR_PKGS=(
   onedrive-abraunegg
 
   mattermost-desktop-bin
+  localsend-bin
 
   lunar-client
   discord
+
+  bluej
 )
 # --needed: skip packages already installed (idempotent)
 # Left out --noconfirm for now.
@@ -215,6 +237,7 @@ VSCODE_EXTS=(
   esbenp.prettier-vscode
   ms-vscode.cpptools
   platformio.platformio-ide
+  espressif.esp-idf-extension
 )
 args=()
 for ext in "${VSCODE_EXTS[@]}"; do
@@ -261,6 +284,19 @@ log "Installing DuckDB..."
 curl https://install.duckdb.org | sh
 ok "DuckDB installed"
 
+# --- 10. Claude Code ---------------------------------------------------------
+# TODO: This always downloads the full Claude Code binary, which takes a while. Consider diverting from the default install.sh to some lighter-weight install method if possible.
+# For now, lets just check whether claude is installed and only reinstall it when it doesnt exist
+# Claude lives at ~/.local/bin/claude
+log "Installing Claude Code..."
+if [ -e "~/.local/bin/claude" ]; then
+  info "Claude Code not found — installing..."
+  curl -fsSL https://claude.ai/install.sh | bash
+  ok "Claude Code installed"
+else
+  ok "Claude Code is already installed"
+fi 
+
 # ── 10. Systemd services ─────────────────────────────────────────────────────
 log "Enabling system services..."
  
@@ -286,6 +322,10 @@ ok "NVIDIA power management services enabled"
 # Weekly pacman package cache cleanup (keeps last 3 versions per package)
 sudo systemctl enable --now paccache.timer
 ok "paccache.timer enabled"
+
+# Bluetooth
+sudo systemctl enable --now bluetooth.service
+ok "bluetooth.service started"
  
 log "Enabling user services..."
  

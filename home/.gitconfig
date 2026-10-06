@@ -9,3 +9,5 @@
 	helper = !/usr/bin/gh auth git-credential
 [core]
 	editor = code
+[init]
+	defaultBranch = main

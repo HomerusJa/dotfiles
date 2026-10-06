@@ -59,5 +59,12 @@
 
     // Prevent VSCode from modifying the terminal colors
     // Suggested by Catppuccin theme author
-    "terminal.integrated.minimumContrastRatio": 1
+    "terminal.integrated.minimumContrastRatio": 1,
+    "extensions.ignoreRecommendations": true,
+    "idf.hasWalkthroughBeenShown": true,
+    "idf.eimExecutableArgs": [
+        "gui",
+        "--idf-features ide"
+    ],
+    "idf.gitPath": "/usr/bin/git"
 }

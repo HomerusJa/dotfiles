@@ -27,6 +27,8 @@ autoload -Uz compinit && compinit
 
 # Fish-like history-based suggestions as you type
 source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
+# Accept the suggestion with Ctrl+Space (Ctrl+E / Ctrl+F also work by default)
+bindkey '^ ' autosuggest-accept
 
 # Real-time syntax highlighting (must be sourced last among plugins)
 source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
@@ -54,6 +56,7 @@ eval "$(zoxide init zsh)"
 source <(fzf --zsh)
 
 # ── Aliases ───────────────────────────────────────────────────────────────────
+
 # eza replaces ls — color-coded, Git status markers, explicit grouping
 # Don't use --color=always to allow piping to other tools without ANSI codes
 # Ref: https://github.com/eza-community/eza
@@ -61,8 +64,12 @@ alias ls="eza --color=auto --group-directories-first"
 alias ll="eza -la --color=auto --group-directories-first --git"
 alias tree="eza --tree --color=auto"
 
+alias ,reload-zsh="source ~/.zshrc"
+
 alias ,install-dotfiles="(cd ~/dotfiles && bash install.sh)"
 alias ,edit-dotfiles="code ~/dotfiles"
+
+alias ,get-idf='source $HOME/.espressif/tools/activate_idf_v6.0.2.sh'
 
 # ── Starship prompt ───────────────────────────────────────────────────────────
 # Must be last line — initializes the prompt engine
