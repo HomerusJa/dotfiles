@@ -64,6 +64,8 @@ alias ls="eza --color=auto --group-directories-first"
 alias ll="eza -la --color=auto --group-directories-first --git"
 alias tree="eza --tree --color=auto"
 
+alias o="xdg-open"
+
 alias ,reload-zsh="source ~/.zshrc"
 
 alias ,install-dotfiles="(cd ~/dotfiles && bash install.sh)"
